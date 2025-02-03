@@ -1,5 +1,6 @@
 package com.example.demo_api_rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -23,7 +25,7 @@ import java.util.Objects;
 @Entity
 @Table(name= "clientes")
 @EntityListeners(AuditingEntityListener.class)
-public class Client implements Serializable {
+public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +65,7 @@ public class Client implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
+        Cliente client = (Cliente) o;
         return Objects.equals(id, client.id);
     }
 

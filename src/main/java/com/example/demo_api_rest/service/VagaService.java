@@ -34,4 +34,10 @@ public class VagaService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public Vaga findVagaLivre() {
+        return vagaRepository.findFirstByStatus(Vaga.StatusVagas.LIVRE).orElseThrow(
+                () -> new EntityNotFoundException("Nenhuma vaga livre encontrada.")
+        );
+    }
 }

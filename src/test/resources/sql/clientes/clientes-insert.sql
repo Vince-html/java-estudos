@@ -5,5 +5,3 @@ insert into USUARIOS (id, username, email, password, role) values (10, 'JohnDevo
 
 
 insert into CLIENTES (id, nome, cpf, id_usuario) values (10, 'Bob Bertioga', '56637623024', 1002);
-
-SELECT * FROM CLIENTES;

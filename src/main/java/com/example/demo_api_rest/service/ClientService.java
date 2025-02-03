@@ -1,6 +1,6 @@
 package com.example.demo_api_rest.service;
 
-import com.example.demo_api_rest.entity.Client;
+import com.example.demo_api_rest.entity.Cliente;
 import com.example.demo_api_rest.exception.CpfUniqueViolationException;
 import com.example.demo_api_rest.exception.EntityNotFoundException;
 import com.example.demo_api_rest.repository.ClientRepository;
@@ -18,9 +18,9 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     @Transactional
-    public Client save(Client client) {
+    public Cliente save(Cliente cliente) {
         try {
-            return clientRepository.save(client);
+            return clientRepository.save(cliente);
 
         } catch (org.springframework.dao.DataIntegrityViolationException ex) {
             throw new CpfUniqueViolationException("CPF já cadastrado");
@@ -28,7 +28,7 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true)
-    public Client findById (Long id) {
+    public Cliente findById (Long id) {
         return clientRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Cliente não encontrado.")
         );
@@ -40,7 +40,14 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true)
-    public Client findByUserId (Long id) {
+    public Cliente findByUserId (Long id) {
         return clientRepository.findByUsuarioId(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Cliente findByCPF (String cpf) {
+        return clientRepository.findByCpf(cpf).orElseThrow(
+                () -> new EntityNotFoundException("Cliente não encontrado.")
+        );
     }
 }

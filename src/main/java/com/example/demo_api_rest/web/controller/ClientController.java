@@ -1,7 +1,7 @@
 package com.example.demo_api_rest.web.controller;
 
 
-import com.example.demo_api_rest.entity.Client;
+import com.example.demo_api_rest.entity.Cliente;
 import com.example.demo_api_rest.jwt.JwtUserDetails;
 import com.example.demo_api_rest.repository.projection.ClientProjection;
 import com.example.demo_api_rest.service.ClientService;
@@ -58,10 +58,10 @@ public class ClientController {
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<ClienteResponseDto> create(@Valid @RequestBody ClienteCreateDto createDto,
                                                      @AuthenticationPrincipal JwtUserDetails userDetails) {
-        Client client = ClienteMapper.toCliente(createDto);
-        client.setUsuario(usuarioService.findById(userDetails.getId()));
-        clientService.save(client);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ClienteMapper.toClienteDto(client));
+        Cliente cliente = ClienteMapper.toCliente(createDto);
+        cliente.setUsuario(usuarioService.findById(userDetails.getId()));
+        clientService.save(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ClienteMapper.toClienteDto(cliente));
     };
 
     @Operation(summary = "Buscar clientes por ID.",
@@ -82,8 +82,8 @@ public class ClientController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClienteResponseDto> getById(@PathVariable Long id) {
-       Client client = clientService.findById(id);
-        return ResponseEntity.ok(ClienteMapper.toClienteDto(client));
+       Cliente cliente = clientService.findById(id);
+        return ResponseEntity.ok(ClienteMapper.toClienteDto(cliente));
     };
 
     @Operation(summary = "Buscar clientes",
@@ -129,7 +129,7 @@ public class ClientController {
     @GetMapping("/details")
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<ClienteResponseDto> getUniqueClient(@AuthenticationPrincipal JwtUserDetails userDetails) {
-        Client cliente = clientService.findByUserId(userDetails.getId());
+        Cliente cliente = clientService.findByUserId(userDetails.getId());
         return ResponseEntity.ok(ClienteMapper.toClienteDto(cliente));
     };
 }
